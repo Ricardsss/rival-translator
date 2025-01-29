@@ -8,7 +8,7 @@ public class TranslateModel : TranslatePage
   public TranslateViewModel ViewModel { get; set; } = new();
   private readonly ILanguageValidationService _languageValidationService;
 
-  public TranslateModel(ITranslationService translationService, ILanguageService languageProvider, IConfiguration configuration, ILanguageValidationService languageValidationService)
+  public TranslateModel(ITranslationService translationService, ILanguageProviderService languageProvider, IConfiguration configuration, ILanguageValidationService languageValidationService)
       : base(translationService, languageProvider, configuration)
   {
     _languageValidationService = languageValidationService;

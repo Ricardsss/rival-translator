@@ -5,7 +5,7 @@ namespace RivalTranslator.Services;
 
 
 
-public class GoogleTranslationService : ITranslationService
+public class GoogleTranslationService : ITranslationService, ILanguageDetectionService
 {
   private readonly TranslationClient _translationClient;
   private readonly ILoggerService _logger;
@@ -45,6 +45,24 @@ public class GoogleTranslationService : ITranslationService
     {
       _logger.LogError($"Failed to translate text: {ex.Message}");
       throw new InvalidOperationException("Failed to translate text.", ex);
+    }
+  }
+  public string DetectLanguage(string text)
+  {
+    try
+    {
+      if (string.IsNullOrWhiteSpace(text))
+      {
+        throw new ArgumentException("Text cannot be null or empty.", nameof(text));
+      }
+
+      var response = _translationClient.DetectLanguage(text);
+      return response.Language;
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError($"Failed to detect language: {ex.Message}");
+      throw new InvalidOperationException("Failed to detect language.", ex);
     }
   }
 }

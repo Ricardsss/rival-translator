@@ -1,6 +1,6 @@
 namespace RivalTranslator.Interfaces;
 
-public interface ILanguageService
+public interface ILanguageProviderService
 {
     Dictionary<string, string> GetLanguages();
 }

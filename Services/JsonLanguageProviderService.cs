@@ -3,7 +3,7 @@ using RivalTranslator.Interfaces;
 
 namespace RivalTranslator.Services;
 
-public class JsonLanguageService : ILanguageService
+public class JsonLanguageProviderService : ILanguageProviderService
 {
     private readonly IWebHostEnvironment _env;
     private readonly string _filePath;
@@ -11,7 +11,7 @@ public class JsonLanguageService : ILanguageService
     private readonly ILoggerService _logger;
 
 
-    public JsonLanguageService(IWebHostEnvironment env, IConfiguration configuration, ILoggerService logger)
+    public JsonLanguageProviderService(IWebHostEnvironment env, IConfiguration configuration, ILoggerService logger)
     {
         _env = env ?? throw new ArgumentNullException(nameof(env));
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));

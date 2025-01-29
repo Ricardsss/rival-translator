@@ -7,10 +7,10 @@ public abstract class TranslatePage : PageModel
 {
   protected readonly ITranslationService GoogleTranslationService;
   protected readonly IConfiguration Configuration;
-  private readonly ILanguageService _languageProvider;
+  private readonly ILanguageProviderService _languageProvider;
   public Dictionary<string, string> LanguageMap { get; private set; } = new();
 
-  protected TranslatePage(ITranslationService translationService, ILanguageService languageProvider, IConfiguration configuration)
+  protected TranslatePage(ITranslationService translationService, ILanguageProviderService languageProvider, IConfiguration configuration)
   {
     GoogleTranslationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
     _languageProvider = languageProvider ?? throw new ArgumentNullException(nameof(languageProvider));

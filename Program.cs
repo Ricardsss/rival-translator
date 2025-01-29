@@ -12,8 +12,9 @@ builder.Services.AddRazorPages();
 
 // Dependency injections
 builder.Services.AddScoped<ITranslationService, GoogleTranslationService>();
+builder.Services.AddScoped<ILanguageDetectionService, GoogleTranslationService>();
 builder.Services.AddScoped<ILanguageValidationService, LanguageValidationService>();
-builder.Services.AddScoped<ILanguageService, JsonLanguageService>();
+builder.Services.AddScoped<ILanguageProviderService, JsonLanguageProviderService>();
 builder.Services.AddScoped<ILoggerService, ConsoleLoggerService>();
 
 

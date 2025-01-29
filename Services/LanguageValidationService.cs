@@ -2,7 +2,7 @@ using RivalTranslator.Interfaces;
 
 namespace RivalTranslator.Services;
 
-public class LanguageValidationService : Service, ILanguageValidationService
+public class LanguageValidationService : ILanguageValidationService
 {
   public bool ValidateLanguages(string sourceLanguage, string targetLanguage, out string errorMessage)
   {

@@ -5,14 +5,14 @@ namespace RivalTranslator.Pages.Translate;
 
 public abstract class TranslatePage : PageModel
 {
-  protected readonly ITranslationService TranslationService;
+  protected readonly ITranslationService GoogleTranslationService;
   protected readonly IConfiguration Configuration;
-  private readonly ILanguageProvider _languageProvider;
+  private readonly ILanguageService _languageProvider;
   public Dictionary<string, string> LanguageMap { get; private set; } = new();
 
-  protected TranslatePage(ITranslationService translationService, ILanguageProvider languageProvider, IConfiguration configuration)
+  protected TranslatePage(ITranslationService translationService, ILanguageService languageProvider, IConfiguration configuration)
   {
-    TranslationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
+    GoogleTranslationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
     _languageProvider = languageProvider ?? throw new ArgumentNullException(nameof(languageProvider));
     Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     LoadLanguageMap();

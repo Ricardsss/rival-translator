@@ -10,10 +10,11 @@ Env.Load();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// Custom services
-builder.Services.AddScoped<ITranslationService, TranslationService>();
+// Dependency injections
+builder.Services.AddScoped<ITranslationService, GoogleTranslationService>();
 builder.Services.AddScoped<ILanguageValidationService, LanguageValidationService>();
-builder.Services.AddScoped<ILanguageProvider, JsonLanguageProvider>();
+builder.Services.AddScoped<ILanguageService, JsonLanguageService>();
+builder.Services.AddScoped<ILoggerService, ConsoleLoggerService>();
 
 
 

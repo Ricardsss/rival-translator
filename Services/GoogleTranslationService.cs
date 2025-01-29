@@ -5,15 +5,17 @@ namespace RivalTranslator.Services;
 
 
 
-public class TranslationService : Service, ITranslationService
+public class GoogleTranslationService : ITranslationService
 {
   private readonly TranslationClient _translationClient;
+  private readonly ILoggerService _logger;
 
-  public TranslationService(IConfiguration configuration)
+  public GoogleTranslationService(IConfiguration configuration, ILoggerService logger)
   {
     if (configuration == null) throw new ArgumentNullException(nameof(configuration));
 
     string apiKey = Environment.GetEnvironmentVariable("GOOGLE_API_KEY") ?? string.Empty;
+    _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     if (string.IsNullOrEmpty(apiKey))
     {
@@ -24,7 +26,7 @@ public class TranslationService : Service, ITranslationService
 
   public string TranslateText(string text, string targetLanguage, string sourceLanguage)
   {
-    return HandleExceptions(() =>
+    try
     {
       if (string.IsNullOrWhiteSpace(text))
       {
@@ -38,6 +40,11 @@ public class TranslationService : Service, ITranslationService
 
       var response = _translationClient.TranslateText(text, targetLanguage, sourceLanguage);
       return response.TranslatedText;
-    }, "Failed to translate text.");
+    }
+    catch (Exception ex)
+    {
+      _logger.LogError($"Failed to translate text: {ex.Message}");
+      throw new InvalidOperationException("Failed to translate text.", ex);
+    }
   }
 }

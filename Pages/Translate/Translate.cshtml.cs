@@ -8,7 +8,7 @@ public class TranslateModel : TranslatePage
   public TranslateViewModel ViewModel { get; set; } = new();
   private readonly ILanguageValidationService _languageValidationService;
 
-  public TranslateModel(ITranslationService translationService, ILanguageProvider languageProvider, IConfiguration configuration, ILanguageValidationService languageValidationService)
+  public TranslateModel(ITranslationService translationService, ILanguageService languageProvider, IConfiguration configuration, ILanguageValidationService languageValidationService)
       : base(translationService, languageProvider, configuration)
   {
     _languageValidationService = languageValidationService;
@@ -43,7 +43,7 @@ public class TranslateModel : TranslatePage
 
     try
     {
-      ViewModel.State.TranslatedText = TranslationService.TranslateText(ViewModel.State.InputText, ViewModel.LanguageMap[ViewModel.State.SelectedTargetLanguage], ViewModel.LanguageMap[ViewModel.State.SelectedSourceLanguage]);
+      ViewModel.State.TranslatedText = GoogleTranslationService.TranslateText(ViewModel.State.InputText, ViewModel.LanguageMap[ViewModel.State.SelectedTargetLanguage], ViewModel.LanguageMap[ViewModel.State.SelectedSourceLanguage]);
     }
     catch (Exception ex)
     {

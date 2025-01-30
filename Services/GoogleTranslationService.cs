@@ -17,10 +17,8 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
     string apiKey = Environment.GetEnvironmentVariable("GOOGLE_API_KEY") ?? string.Empty;
     _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    if (string.IsNullOrEmpty(apiKey))
-    {
-      throw new InvalidOperationException("API key for Google Cloud Translation is missing.");
-    }
+    InputValidationService.ValidateNotNullOrEmpty(apiKey, nameof(apiKey));
+
     _translationClient = TranslationClient.CreateFromApiKey(apiKey);
   }
 
@@ -28,15 +26,9 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
   {
     try
     {
-      if (string.IsNullOrWhiteSpace(text))
-      {
-        throw new ArgumentException("Text to translate cannot be null or empty.", nameof(text));
-      }
-
-      if (string.IsNullOrEmpty(targetLanguage) || string.IsNullOrEmpty(sourceLanguage))
-      {
-        throw new ArgumentException("Both target and source languages must be specified.");
-      }
+      InputValidationService.ValidateNotNullOrEmpty(text, nameof(text));
+      InputValidationService.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+      InputValidationService.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
 
       var response = _translationClient.TranslateText(text, targetLanguage, sourceLanguage);
       return response.TranslatedText;
@@ -51,10 +43,7 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
   {
     try
     {
-      if (string.IsNullOrWhiteSpace(text))
-      {
-        throw new ArgumentException("Text cannot be null or empty.", nameof(text));
-      }
+      InputValidationService.ValidateNotNullOrEmpty(text, nameof(text));
 
       var response = _translationClient.DetectLanguage(text);
       return response.Language;

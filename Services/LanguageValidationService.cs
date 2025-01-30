@@ -6,11 +6,8 @@ public class LanguageValidationService : ILanguageValidationService
 {
   public bool ValidateLanguages(string sourceLanguage, string targetLanguage, out string errorMessage)
   {
-    if (string.IsNullOrWhiteSpace(sourceLanguage) || string.IsNullOrWhiteSpace(targetLanguage))
-    {
-      errorMessage = "Both source and target languages must be specified.";
-      return false;
-    }
+    InputValidationService.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
+    InputValidationService.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
 
     if (sourceLanguage == targetLanguage)
     {

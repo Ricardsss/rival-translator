@@ -10,10 +10,10 @@ public abstract class TranslatePage : PageModel
   private readonly ILanguageProviderService _languageProvider;
   public Dictionary<string, string> LanguageMap { get; private set; } = new();
 
-  protected TranslatePage(ITranslationService translationService, ILanguageProviderService languageProvider, IConfiguration configuration)
+  protected TranslatePage(ITranslationService translationService, ILanguageProviderFactory languageProviderFactory, IConfiguration configuration)
   {
     GoogleTranslationService = translationService ?? throw new ArgumentNullException(nameof(translationService));
-    _languageProvider = languageProvider ?? throw new ArgumentNullException(nameof(languageProvider));
+    _languageProvider = _languageProvider = languageProviderFactory.GetLanguageProvider();
     Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     LoadLanguageMap();
   }

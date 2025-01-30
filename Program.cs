@@ -15,12 +15,13 @@ builder.Services.AddScoped<ITranslationService, GoogleTranslationService>();
 builder.Services.AddScoped<ILanguageDetectionService, GoogleTranslationService>();
 builder.Services.AddScoped<ILanguageValidationService, LanguageValidationService>();
 builder.Services.AddScoped<ILanguageProviderService, JsonLanguageProviderService>();
+builder.Services.AddScoped<ILanguageProviderFactory, LanguageProviderFactory>();
 builder.Services.AddScoped<ILoggerService, ConsoleLoggerService>();
 
 
 
-
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

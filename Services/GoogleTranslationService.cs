@@ -12,12 +12,13 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
 
   public GoogleTranslationService(IConfiguration configuration, ILoggerService logger)
   {
-    if (configuration == null) throw new ArgumentNullException(nameof(configuration));
+    Validator.ValidateNotNull(configuration, nameof(configuration));
+
+    Validator.ValidateNotNull(logger, nameof(logger));
+    _logger = logger;
 
     string apiKey = Environment.GetEnvironmentVariable("GOOGLE_API_KEY") ?? string.Empty;
-    _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-
-    InputValidationService.ValidateNotNullOrEmpty(apiKey, nameof(apiKey));
+    Validator.ValidateNotNullOrEmpty(apiKey, nameof(apiKey));
 
     _translationClient = TranslationClient.CreateFromApiKey(apiKey);
   }
@@ -26,9 +27,9 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
   {
     try
     {
-      InputValidationService.ValidateNotNullOrEmpty(text, nameof(text));
-      InputValidationService.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
-      InputValidationService.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
+      Validator.ValidateNotNullOrEmpty(text, nameof(text));
+      Validator.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+      Validator.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
 
       var response = _translationClient.TranslateText(text, targetLanguage, sourceLanguage);
       return response.TranslatedText;
@@ -43,7 +44,7 @@ public class GoogleTranslationService : ITranslationService, ILanguageDetectionS
   {
     try
     {
-      InputValidationService.ValidateNotNullOrEmpty(text, nameof(text));
+      Validator.ValidateNotNullOrEmpty(text, nameof(text));
 
       var response = _translationClient.DetectLanguage(text);
       return response.Language;

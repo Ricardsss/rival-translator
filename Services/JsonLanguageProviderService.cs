@@ -13,9 +13,15 @@ public class JsonLanguageProviderService : ILanguageProviderService
 
     public JsonLanguageProviderService(IWebHostEnvironment env, IConfiguration configuration, ILoggerService logger)
     {
-        _env = env ?? throw new ArgumentNullException(nameof(env));
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        Validator.ValidateNotNull(env, nameof(env));
+        _env = env;
+
+        Validator.ValidateNotNull(configuration, nameof(configuration));
+        _configuration = configuration;
+
+        Validator.ValidateNotNull(logger, nameof(logger));
+        _logger = logger;
+
         string fileFolder = _configuration["JsonData:Folder"] ?? "resources";
         string fileName = _configuration["JsonData:File"] ?? "languages.json";
         _filePath = Path.Combine(_env.ContentRootPath, fileFolder, fileName);
@@ -25,12 +31,9 @@ public class JsonLanguageProviderService : ILanguageProviderService
     {
         try
         {
-            if (!File.Exists(_filePath))
-            {
-                throw new FileNotFoundException($"Language file not found at {_filePath}.");
-            }
-
+            Validator.ValidateFileFound(_filePath);
             string jsonContent = File.ReadAllText(_filePath);
+
             return JsonSerializer.Deserialize<Dictionary<string, string>>(jsonContent)
        ?? throw new InvalidOperationException("Failed to deserialize JSON.");
         }

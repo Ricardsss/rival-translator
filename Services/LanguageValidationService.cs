@@ -6,8 +6,8 @@ public class LanguageValidationService : ILanguageValidationService
 {
   public bool ValidateLanguages(string sourceLanguage, string targetLanguage, out string errorMessage)
   {
-    InputValidationService.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
-    InputValidationService.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
+    Validator.ValidateNotNullOrEmpty(sourceLanguage, nameof(sourceLanguage));
+    Validator.ValidateNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
 
     if (sourceLanguage == targetLanguage)
     {

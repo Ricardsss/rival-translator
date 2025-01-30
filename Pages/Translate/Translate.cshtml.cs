@@ -43,7 +43,7 @@ public class TranslateModel : TranslatePage
 
     try
     {
-      ViewModel.State.TranslatedText = GoogleTranslationService.TranslateText(ViewModel.State.InputText, ViewModel.LanguageMap[ViewModel.State.SelectedTargetLanguage], ViewModel.LanguageMap[ViewModel.State.SelectedSourceLanguage]);
+      ViewModel.State.TranslatedText = TranslationService.TranslateText(ViewModel.State.InputText, ViewModel.LanguageMap[ViewModel.State.SelectedTargetLanguage], ViewModel.LanguageMap[ViewModel.State.SelectedSourceLanguage]);
     }
     catch (Exception ex)
     {
